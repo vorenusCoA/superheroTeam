@@ -1,0 +1,27 @@
+<h2>Search your Superhero</h2>
+<form [formGroup]="buscador" (ngSubmit)="btnSearchOnClick()">
+    <input formControlName="name" type=text autofocus>
+    <button id="search" [disabled]="buscador.invalid" type="submit" class="btn btn-danger">SEARCH</button>
+</form>
+<div class="home">
+    <div *ngFor="let superheroe of superheroes">
+        <img style="width: 200px;" [src]="superheroe.image.url">
+        <h3>{{superheroe.name}}</h3>
+        <button (click)="agregarSuperheroe(superheroe)" class="btn btn-success">Add</button>
+        <button (click)="compartirVista()" class="btn btn-primary detailAdd"
+            [routerLink]="['/superheroe', superheroe.id]">Detail</button>
+    </div>
+</div>
+<h1>Superhero Team</h1>
+<div class="home">
+    <div *ngFor="let superheroe of team">
+        <img style="width: 200px;" [src]="superheroe.image.url">
+        <h3>{{superheroe.name}}</h3>
+        <form>
+            <button class="btn btn-primary detailAdd" [routerLink]="['/superheroe', superheroe.id]">Detail</button>
+            <button type="submit" class="btn btn-danger detailAdd">Delete</button>
+        </form>
+
+    </div>
+
+</div>

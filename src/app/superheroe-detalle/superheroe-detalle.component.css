@@ -1,0 +1,33 @@
+img {
+    width: 350px;
+}
+
+li { 
+    color: white;
+    font-size: 20px;
+    font-family: monospace;
+}
+
+.detalle {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2em;
+    padding-top: 30px;
+    
+}
+
+div {
+    max-width: 70rem;
+    width: 100%;
+}
+
+button {
+    margin-inline: 5px;
+}
+
+span {
+    color: violet;
+    font-size: 20px;
+    font-family: monospace;
+}

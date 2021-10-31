@@ -1,0 +1,19 @@
+<div class="detalle">
+    <img *ngIf="superheroe" [src]="superheroe.image.url">
+    <div>
+        <ul *ngIf="superheroe">
+            <li><span>Name: </span>{{superheroe.biography['full-name']}}</li>
+            <li><span>Alias:</span> {{superheroe.biography.aliases}}</li>
+            <li><span>Workplace:</span> {{superheroe.work.base}}</li>
+            <li><span>Weight:</span> {{superheroe.appearance.weight}}</li>
+            <li><span>Height: </span>{{superheroe.appearance.height}}</li>
+            <li><span>Eye Color:</span> {{superheroe.appearance['eye-color']}}</li>
+            <li><span>Hair Color:</span> {{superheroe.appearance['hair-color']}}</li>
+        </ul>
+
+        <button class="btn btn-primary" [routerLink]="['/home']" [queryParams]="{search:rutaARegresar}">Volver</button>
+        <button class="btn btn-danger">Add</button>
+    </div>
+
+
+</div>
