@@ -1,27 +1,30 @@
-# SuperHeroTeam
+# SuperHero Team (proyecto en progreso)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.2.
+Es una aplicacion creada en base al "CHALLENGE FRONTEND - Angular" de Alkemy.
 
-## Development server
+Con un llamado a la API de https://superheroapi.com/, la aplicación permite realizar busquedas de los superheroes favoritos e ir formando un Superhero Team
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Pueden verla funcionando en el siguiente link: PENDIENTE
 
-## Code scaffolding
+## Instrucciones para correrlo localmente
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Instalar node: https://nodejs.org/en/
 
-## Build
+Clonar el repositorio de GitHub: git clone https://github.com/ManuelGonzalez007/superheroTeam.git
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Instalar dependencias: *npm install*
 
-## Running unit tests
+## Configuracion del Servicio
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+Dentro de la carpeta servicio, se encuentra el archivo servicio.service.ts
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Es necesario cambiar el valor de API_KEY.
 
-## Further help
+Reemplazar el string existente por el valor del access token proporcionado por https://superheroapi.com/
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Levantar app
+
+Levantar el servidor de Angular CLI: npm start
+
+App disponible en: localhost: 4200
