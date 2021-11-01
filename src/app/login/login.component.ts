@@ -8,32 +8,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  email: string; // borrar
-  password: string; // borrar
   loginForm: FormGroup
 
   constructor(private elementRef: ElementRef, private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
-      mail:["", Validators.required],
-      pass:["", Validators.required]
+      mail: ["", Validators.required],
+      pass: ["", Validators.required]
     })
-    this.email = ""; // borrar
-    this.password=""; // borrar
     //this.grabarLocalStorage()
     //this.obtenerLocalStorage()
-
   }
 
   ngAfterViewInit() {
     this.elementRef.nativeElement.ownerDocument.body
-    .style.backgroundColor = 'black';
+      .style.backgroundColor = 'black';
   }
 
   submitForm() {
-    if(this.loginForm.get("mail")?.value === "challenge@alkemy.org" && this.loginForm.get("pass")?.value === "angular") {
-    this.router.navigate(['/home']);
-    //console.log(this.loginForm.get("mail")?.value)
-    //console.log(this.loginForm.get("pass")?.value)
+    if (this.loginForm.get("mail")?.value === "challenge@alkemy.org" && this.loginForm.get("pass")?.value === "angular") {
+      this.router.navigate(['/home']);
     }
   }
 
@@ -41,22 +34,20 @@ export class LoginComponent implements OnInit {
     this.grabarLocalStorage()
   }
 
- 
-
   grabarLocalStorage() {
-    let Email:string= "challenge@alkemy.org"
-    let Password:string= "angular"
+    let Email: string = "challenge@alkemy.org"
+    let Password: string = "angular"
     localStorage.setItem("Email", Email)
     localStorage.setItem("Password", Password)
   }
 
 
-/*
-  obtenerLocalStorage() {
-    let Email = localStorage.getItem("Email")
-    let Password = localStorage.getItem("Password")
- 
-  }
-  */
+  /*
+    obtenerLocalStorage() {
+      let Email = localStorage.getItem("Email")
+      let Password = localStorage.getItem("Password")
+   
+    }
+    */
 
 }

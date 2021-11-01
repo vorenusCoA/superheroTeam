@@ -74,6 +74,11 @@ export class HomeComponent implements OnInit {
     this.team.push(superheroe)
   }
 
+  borrarSuperheroe(superheroe: SuperHeroe) {
+    let index = this.team.indexOf(superheroe);
+    this.team.splice(index, 1);
+  }
+
   compartirVista() { // le pasa al servicio la info
     console.log("dentro de compartirVista ", this.vista_actual)
     this.servicio.cargarVista(this.vista_actual)

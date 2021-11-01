@@ -17,11 +17,8 @@
     <div *ngFor="let superheroe of team">
         <img style="width: 200px;" [src]="superheroe.image.url">
         <h3>{{superheroe.name}}</h3>
-        <form>
-            <button class="btn btn-primary detailAdd" [routerLink]="['/superheroe', superheroe.id]">Detail</button>
-            <button type="submit" class="btn btn-danger detailAdd">Delete</button>
-        </form>
-
+        <button (click)="compartirVista()" class="btn btn-primary detailAdd"
+            [routerLink]="['/superheroe', superheroe.id]">Detail</button>
+        <button (click)="borrarSuperheroe(superheroe)" class="btn btn-danger detailAdd">Delete</button>
     </div>
-
 </div>
