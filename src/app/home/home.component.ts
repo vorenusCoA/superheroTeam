@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   superheroes: SuperHeroe[] = []
   vista_actual: string
   team: SuperHeroe[] = []
+  goodHero: number
+  badhero: number
 
   constructor(private servicio: ServicioService, private fb: FormBuilder,
     private elementRef: ElementRef, private _route: ActivatedRoute, private _router: Router) {
@@ -21,6 +23,9 @@ export class HomeComponent implements OnInit {
       name: ["", Validators.required]
     })
     this.vista_actual = ""
+    this.goodHero = 0
+    this.badhero = 0
+
   }
 
   ngAfterViewInit() {
@@ -71,7 +76,35 @@ export class HomeComponent implements OnInit {
   }
 
   agregarSuperheroe(superheroe: SuperHeroe) {
-    this.team.push(superheroe)
+    let malo = false
+    let bueno = false
+    if (this.team.length < 6 && this.team.indexOf(superheroe) === -1) {
+      this.team.push(superheroe)
+      for (let i = 0; i < this.team.length; i++) {
+        if (this.team[this.team.length - 1].biography.alignment === "good") {
+          bueno = true
+        } else {
+          malo = true
+        }
+      }
+      if (bueno) {
+        this.goodHero++
+      }
+      if (malo) {
+        this.badhero++
+      }
+      if (this.goodHero > 3) {
+        this.team.splice(this.team.length - 1, 1)
+        this.goodHero--
+      }
+      if (this.badhero > 3) {
+        this.team.splice(this.team.length - 1, 1)
+        this.badhero--
+      }
+    }
+
+    console.log("bad: ", this.badhero)
+    console.log("good: ", this.goodHero)
   }
 
   borrarSuperheroe(superheroe: SuperHeroe) {
