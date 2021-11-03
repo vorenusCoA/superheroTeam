@@ -23,22 +23,6 @@ Es necesario cambiar el valor de API_KEY.
 
 Reemplazar el string existente por el valor del access token proporcionado por https://superheroapi.com/
 
-## Archivo proxy.conf.json
-
-Para evitar el error de CORS policy, es necesario crear el archivo proxy.conf.json en la raíz del proyecto.
-Debe tener el siguiente codigo:
-
-{
-    "/api/*": {
-      "target": "https://superheroapi.com",
-      "secure": false,
-      "changeOrigin": true 
-    }
-  }
-
-
-Por último, en el package.json, en la parte de "scripts", en "start", poner: "ng serve --proxy-config proxy.conf.json" 
-
 ## Levantar app
 
 Levantar el servidor de Angular CLI: npm start
