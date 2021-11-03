@@ -80,12 +80,10 @@ export class HomeComponent implements OnInit {
     let bueno = false
     if (this.team.length < 6 && this.team.indexOf(superheroe) === -1) {
       this.team.push(superheroe)
-      for (let i = 0; i < this.team.length; i++) {
-        if (this.team[this.team.length - 1].biography.alignment === "good") {
-          bueno = true
-        } else {
-          malo = true
-        }
+      if (superheroe.biography.alignment === "good") {
+        bueno = true
+      } else {
+        malo = true
       }
       if (bueno) {
         this.goodHero++
@@ -102,14 +100,21 @@ export class HomeComponent implements OnInit {
         this.badhero--
       }
     }
-
     console.log("bad: ", this.badhero)
     console.log("good: ", this.goodHero)
   }
 
   borrarSuperheroe(superheroe: SuperHeroe) {
+    if (superheroe.biography.alignment === "good") {
+      this.goodHero--
+    } else {
+      this.badhero--
+    }
     let index = this.team.indexOf(superheroe);
     this.team.splice(index, 1);
+
+    console.log("bad: ", this.badhero)
+    console.log("good: ", this.goodHero)
   }
 
   compartirVista() { // le pasa al servicio la info

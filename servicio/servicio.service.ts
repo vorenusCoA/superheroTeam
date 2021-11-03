@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ServicioService {
 
-  private API_KEY = "Introducir access token proporcionado por https://superheroapi.com/"    
+  private API_KEY = "Introducir access token proporcionado por https://superheroapi.com/"   
 
   constructor(private http: HttpClient) { }
 
