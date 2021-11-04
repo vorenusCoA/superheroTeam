@@ -3,12 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SuperHeroe } from 'modelo/superheroe';
 import { ServicioService } from 'servicio/servicio.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent implements OnInit {
   buscador: FormGroup
   superheroes: SuperHeroe[] = []
@@ -18,14 +20,14 @@ export class HomeComponent implements OnInit {
   badhero: number
 
   constructor(private servicio: ServicioService, private fb: FormBuilder,
-    private elementRef: ElementRef, private _route: ActivatedRoute, private _router: Router) {
+    private elementRef: ElementRef, private _route: ActivatedRoute, private _router: Router,
+    private toastr: ToastrService) {
     this.buscador = this.fb.group({
       name: ["", Validators.required]
     })
     this.vista_actual = ""
     this.goodHero = 0
     this.badhero = 0
-
   }
 
   ngAfterViewInit() {
@@ -41,6 +43,9 @@ export class HomeComponent implements OnInit {
         this.buscarSuperheroe(params['search'])
       }
     });
+
+    console.log("team: ", this.team)
+
   }
 
   btnSearchOnClick() {
@@ -78,8 +83,16 @@ export class HomeComponent implements OnInit {
   agregarSuperheroe(superheroe: SuperHeroe) {
     let malo = false
     let bueno = false
+
+    if (this.team.indexOf(superheroe) !== -1) {
+      this.toastr.toastrConfig.preventDuplicates = true;
+      this.toastr.info('Ya es parte del equipo', 'Atencion', { timeOut: 2000 })
+    }
+
     if (this.team.length < 6 && this.team.indexOf(superheroe) === -1) {
       this.team.push(superheroe)
+      this.toastr.toastrConfig.preventDuplicates = true;
+      this.toastr.success('Personaje agregado', 'Exito!', { timeOut: 2000 })
       if (superheroe.biography.alignment === "good") {
         bueno = true
       } else {
@@ -92,14 +105,24 @@ export class HomeComponent implements OnInit {
         this.badhero++
       }
       if (this.goodHero > 3) {
+        this.toastr.toastrConfig.preventDuplicates = true;
+        this.toastr.info('Solo 3 Superheroes permitidos', 'Limite alcanzado', { timeOut: 2000 })
         this.team.splice(this.team.length - 1, 1)
         this.goodHero--
       }
       if (this.badhero > 3) {
+        this.toastr.toastrConfig.preventDuplicates = true;
+        this.toastr.info('Solo 3 Villanos permitidos', 'Limite alcanzado', { timeOut: 2000 })
         this.team.splice(this.team.length - 1, 1)
         this.badhero--
       }
     }
+
+    if (this.team.length === 6) {
+      this.toastr.toastrConfig.preventDuplicates = true;
+      this.toastr.info('Ya no podrás agregar más miembros al equipo', 'Limite alcanzado', { timeOut: 2000 })
+    }
+
     console.log("bad: ", this.badhero)
     console.log("good: ", this.goodHero)
   }

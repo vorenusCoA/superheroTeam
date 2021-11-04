@@ -8,6 +8,8 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import{ HttpClientModule } from '@angular/common/http';
 import { SuperheroeDetalleComponent } from './superheroe-detalle/superheroe-detalle.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { SuperheroeDetalleComponent } from './superheroe-detalle/superheroe-deta
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
     
   providers: [],
