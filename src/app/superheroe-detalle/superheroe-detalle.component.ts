@@ -25,6 +25,11 @@ export class SuperheroeDetalleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let token = localStorage.getItem("token")
+    if (!token) {
+      this._router.navigate(['/login']);
+    }
+
     this.getSuperhero()
     this.servicio.sharedView.subscribe(vista_actual => {
       this.rutaARegresar = vista_actual

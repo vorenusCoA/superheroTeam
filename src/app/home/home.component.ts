@@ -16,8 +16,15 @@ export class HomeComponent implements OnInit {
   superheroes: SuperHeroe[] = []
   vista_actual: string
   team: SuperHeroe[] = []
-  goodHero: number
-  badhero: number
+  averageWeight: any
+  averageHeight: any
+  totalCombat: number
+  totalDurability: number
+  totalIntelligence: number
+  totalPower: number
+  totalSpeed: number
+  totalStrength: number
+  arrayPowerstats: any
 
   constructor(private servicio: ServicioService, private fb: FormBuilder,
     private elementRef: ElementRef, private _route: ActivatedRoute, private _router: Router,
@@ -26,8 +33,15 @@ export class HomeComponent implements OnInit {
       name: ["", Validators.required]
     })
     this.vista_actual = ""
-    this.goodHero = 0
-    this.badhero = 0
+    this.averageWeight = 0
+    this.averageHeight = 0
+    this.totalCombat = 0
+    this.totalDurability = 0
+    this.totalIntelligence = 0
+    this.totalPower = 0
+    this.totalSpeed = 0
+    this.totalStrength = 0    
+  
   }
 
   ngAfterViewInit() {
@@ -36,6 +50,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let token = localStorage.getItem("token")
+    if (!token) {
+      this._router.navigate(['/login']);
+    }
     this._route.queryParams.subscribe(params => {
       if (params['search'] !== undefined) {
         this.vista_actual = params['search']
@@ -44,7 +62,25 @@ export class HomeComponent implements OnInit {
       }
     });
 
-    console.log("team: ", this.team)
+    this.servicio.sharedmyTeam.subscribe(myTeam => {
+      this.team = myTeam
+      for (let i = 0; i < this.team.length; i++) {
+        this.averageWeight += parseInt(myTeam[i].appearance.weight[1].replace("kg", ""))
+        this.averageHeight += parseInt(myTeam[i].appearance.height[1].replace("cm", ""))  
+        this.totalCombat += parseInt(myTeam[i].powerstats.combat)
+        this.totalDurability += parseInt(myTeam[i].powerstats.durability)
+        this.totalIntelligence += parseInt(myTeam[i].powerstats.intelligence)
+        this.totalPower += parseInt(myTeam[i].powerstats.power)
+        this.totalSpeed += parseInt(myTeam[i].powerstats.speed)
+        this.totalStrength += parseInt(myTeam[i].powerstats.strength)
+
+      }
+      if(myTeam.length > 0) {
+        this.averageWeight = (this.averageWeight / myTeam.length).toFixed(2)      
+        this.averageHeight = (this.averageHeight / myTeam.length).toFixed(2)
+      }  
+
+    })
 
   }
 
@@ -81,68 +117,122 @@ export class HomeComponent implements OnInit {
   }
 
   agregarSuperheroe(superheroe: SuperHeroe) {
-    let malo = false
-    let bueno = false
-
-    if (this.team.indexOf(superheroe) !== -1) {
-      this.toastr.toastrConfig.preventDuplicates = true;
-      this.toastr.info('Ya es parte del equipo', 'Atencion', { timeOut: 2000 })
-    }
-
-    if (this.team.length < 6 && this.team.indexOf(superheroe) === -1) {
-      this.team.push(superheroe)
-      this.toastr.toastrConfig.preventDuplicates = true;
-      this.toastr.success('Personaje agregado', 'Exito!', { timeOut: 2000 })
-      if (superheroe.biography.alignment === "good") {
-        bueno = true
-      } else {
-        malo = true
-      }
-      if (bueno) {
-        this.goodHero++
-      }
-      if (malo) {
-        this.badhero++
-      }
-      if (this.goodHero > 3) {
-        this.toastr.toastrConfig.preventDuplicates = true;
-        this.toastr.info('Solo 3 Superheroes permitidos', 'Limite alcanzado', { timeOut: 2000 })
-        this.team.splice(this.team.length - 1, 1)
-        this.goodHero--
-      }
-      if (this.badhero > 3) {
-        this.toastr.toastrConfig.preventDuplicates = true;
-        this.toastr.info('Solo 3 Villanos permitidos', 'Limite alcanzado', { timeOut: 2000 })
-        this.team.splice(this.team.length - 1, 1)
-        this.badhero--
-      }
-    }
 
     if (this.team.length === 6) {
       this.toastr.toastrConfig.preventDuplicates = true;
-      this.toastr.info('Ya no podrás agregar más miembros al equipo', 'Limite alcanzado', { timeOut: 2000 })
+      this.toastr.info('Ya no podes agregar más miembros al equipo', 'Limite alcanzado', { timeOut: 2000 })
+      return
     }
 
-    console.log("bad: ", this.badhero)
-    console.log("good: ", this.goodHero)
+    for (let i = 0; i < this.team.length; i++) {
+      if (this.team[i].id === superheroe.id) {
+        this.toastr.toastrConfig.preventDuplicates = true;
+        this.toastr.warning('Ya es parte del equipo', 'Atencion', { timeOut: 2000 })
+        return
+      }
+    }
+    let badHero = 0
+    let goodHero = 0
+
+    for (let i = 0; i < this.team.length; i++) {
+      if (this.team[i].biography.alignment === "good") {
+        goodHero++
+      } else if (this.team[i].biography.alignment === "bad") {
+        badHero++
+      }
+    }
+
+    if (superheroe.biography.alignment === "good" && goodHero === 3) {
+      this.toastr.toastrConfig.preventDuplicates = true;
+      this.toastr.info('Solo 3 Superheroes permitidos', 'Limite alcanzado', { timeOut: 2000 })
+      return
+    }
+
+    if (superheroe.biography.alignment === "bad" && badHero === 3) {
+      this.toastr.toastrConfig.preventDuplicates = true;
+      this.toastr.info('Solo 3 Villanos permitidos', 'Limite alcanzado', { timeOut: 2000 })
+      return
+    }
+
+    let msj = ""
+    if (superheroe.biography.alignment === "good") {
+      msj = "Superheroe agregado"
+
+    } else if (superheroe.biography.alignment === "bad") {
+      msj = "Villano agregado"
+    } else {
+      msj = "Personaje neutral agregado"
+    }
+
+    this.team.push(superheroe)
+    this.toastr.toastrConfig.preventDuplicates = true;
+    this.toastr.success(msj, 'Exito!', { timeOut: 2000 })
+
+    this.calcularPromedios()
   }
 
   borrarSuperheroe(superheroe: SuperHeroe) {
+
+    let msj = ""
+
     if (superheroe.biography.alignment === "good") {
-      this.goodHero--
+      msj = 'Superheroe eliminado'
+    } else if (superheroe.biography.alignment === "bad") {
+      msj = 'Villano eliminado'
     } else {
-      this.badhero--
+      msj = "Personaje neutral eliminado"
     }
+
     let index = this.team.indexOf(superheroe);
     this.team.splice(index, 1);
+    this.toastr.toastrConfig.preventDuplicates = true;
+    this.toastr.error(msj, 'Exito!', { timeOut: 2000 })
+    this.calcularPromedios()
 
-    console.log("bad: ", this.badhero)
-    console.log("good: ", this.goodHero)
   }
 
-  compartirVista() { // le pasa al servicio la info
+  calcularPromedios() {
+    
+    let peso = 0
+    let altura = 0
+    let combat = 0
+    let durability = 0
+    let intelligence = 0
+    let power = 0
+    let speed = 0
+    let strength = 0    
+
+    for (let i = 0; i < this.team.length; i++) {
+      peso += parseInt(this.team[i].appearance.weight[1].replace("kg", ""))
+      altura += parseInt(this.team[i].appearance.height[1].replace("cm", ""))
+      combat += parseInt(this.team[i].powerstats.combat)
+      durability += parseInt(this.team[i].powerstats.durability)
+      intelligence += parseInt(this.team[i].powerstats.intelligence)
+      power += parseInt(this.team[i].powerstats.power)
+      speed += parseInt(this.team[i].powerstats.speed)
+      strength += parseInt(this.team[i].powerstats.strength)
+
+    }
+    this.averageWeight = (peso / this.team.length).toFixed(2)
+    this.averageHeight = (altura / this.team.length).toFixed(2)
+    this.totalCombat = combat
+    this.totalDurability = durability
+    this.totalIntelligence = intelligence
+    this.totalPower = power
+    this.totalSpeed = speed
+    this.totalStrength = strength
+
+    this.arrayPowerstats = [this.totalCombat, this.totalDurability, this.totalIntelligence, this.totalPower, this.totalSpeed, this.totalStrength]
+    console.log("sin sort: ",this.arrayPowerstats)
+    this.arrayPowerstats.sort((a:number,b:number)=>b-a)
+    console.log("con sort: ",this.arrayPowerstats)
+
+  }
+
+  compartirDatosServicio() { // le pasa al servicio la info
     console.log("dentro de compartirVista ", this.vista_actual)
     this.servicio.cargarVista(this.vista_actual)
+    this.servicio.cargarmyTeam(this.team)
   }
 
 }

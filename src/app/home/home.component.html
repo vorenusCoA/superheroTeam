@@ -8,16 +8,32 @@
         <img style="width: 200px;" [src]="superheroe.image.url">
         <h3>{{superheroe.name}}</h3>
         <button (click)="agregarSuperheroe(superheroe)" class="btn btn-success">Add</button>
-        <button (click)="compartirVista()" class="btn btn-primary detailAdd"
+        <button (click)="compartirDatosServicio()" class="btn btn-primary detailAdd"
             [routerLink]="['/superheroe', superheroe.id]">Detail</button>
     </div>
 </div>
 <h1>Superhero Team</h1>
+<p>Average Team Weight {{averageWeight}} kg</p>
+<p>Average Team Height {{averageHeight}} cm</p>
+<p> Team Combat {{totalCombat}}</p>
+<p> Team Durability {{totalDurability}}</p>
+<p> Team Intelligence {{totalIntelligence}}</p>
+<p> Team Power {{totalPower}}</p>
+<p> Team Speed {{totalSpeed}}</p>
+<p> Team Strength {{totalStrength}}</p>
 <div class="home">
     <div *ngFor="let superheroe of team">
         <img style="width: 200px;" [src]="superheroe.image.url">
         <h3>{{superheroe.name}}</h3>
-        <button (click)="compartirVista()" class="btn btn-primary detailAdd"
+        <ul>
+            <li><span>Combat:</span> {{superheroe.powerstats.combat}}</li>
+            <li><span>Durability:</span> {{superheroe.powerstats.durability}}</li>
+            <li><span>Intelligence:</span> {{superheroe.powerstats.intelligence}}</li>
+            <li><span>Power:</span> {{superheroe.powerstats.power}}</li>
+            <li><span>Speed:</span> {{superheroe.powerstats.speed}}</li>
+            <li><span>Strength:</span> {{superheroe.powerstats.strength}}</li>
+        </ul>
+        <button (click)="compartirDatosServicio()" class="btn btn-primary detailAdd"
             [routerLink]="['/superheroe', superheroe.id]">Detail</button>
         <button (click)="borrarSuperheroe(superheroe)" class="btn btn-danger detailAdd">Delete</button>
     </div>

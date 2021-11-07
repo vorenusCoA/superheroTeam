@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +11,11 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
 
-  constructor(private elementRef: ElementRef, private fb: FormBuilder, private router: Router) {
+  constructor(private elementRef: ElementRef, private fb: FormBuilder, private router: Router, private toastr: ToastrService) {
     this.loginForm = this.fb.group({
       mail: ["", Validators.required],
       pass: ["", Validators.required]
     })
-    //this.grabarLocalStorage()
-    //this.obtenerLocalStorage()
   }
 
   ngAfterViewInit() {
@@ -26,28 +25,16 @@ export class LoginComponent implements OnInit {
 
   submitForm() {
     if (this.loginForm.get("mail")?.value === "challenge@alkemy.org" && this.loginForm.get("pass")?.value === "angular") {
+      let token = "sdasjdaskdkalsdjklasjdklasjdklasjdklasjdkasjdlsk"
+      localStorage.setItem("token", token)
       this.router.navigate(['/home']);
+    } else {
+      this.toastr.toastrConfig.preventDuplicates = true;
+      this.toastr.error('Mail o contraseña incorrectos', 'Error', { timeOut: 2000 })
+
     }
   }
 
   ngOnInit(): void {
-    this.grabarLocalStorage()
   }
-
-  grabarLocalStorage() {
-    let Email: string = "challenge@alkemy.org"
-    let Password: string = "angular"
-    localStorage.setItem("Email", Email)
-    localStorage.setItem("Password", Password)
-  }
-
-
-  /*
-    obtenerLocalStorage() {
-      let Email = localStorage.getItem("Email")
-      let Password = localStorage.getItem("Password")
-   
-    }
-    */
-
 }

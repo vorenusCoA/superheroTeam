@@ -1,28 +1,14 @@
 <div class="login">
-    <form [formGroup]="loginForm" class="custom-form" (ngSubmit)="submitForm()">
-      <input
-        formControlName="mail"
-        type="email"
-        name="email"
-        placeholder="Email"
-        required="required"
-      />
-      <div class="text-danger"
-        *ngIf="loginForm.get('mail')?.hasError('required') && loginForm.get('mail')?.touched">
-        <span>Email<strong> obligatorio</strong></span>
+  <form [formGroup]="loginForm" class="custom-form" (ngSubmit)="submitForm()">
+    <input formControlName="mail" type="email" name="email" placeholder="Email" required="required" />
+    <div class="text-danger" *ngIf="loginForm.get('mail')?.hasError('required') && loginForm.get('mail')?.touched">
+      <span>Email<strong> obligatorio</strong></span>
     </div>
-      <input
-        formControlName="pass"
-        type="password"
-        name="password"
-        placeholder="Password"
-        required="required"
-      />
-      <div class="text-danger"
-      *ngIf="loginForm.get('pass')?.hasError('required') && loginForm.get('pass')?.touched">
+    <input formControlName="pass" type="password" name="password" placeholder="Password" required="required" />
+    <div class="text-danger" *ngIf="loginForm.get('pass')?.hasError('required') && loginForm.get('pass')?.touched">
       <span>Password<strong> obligatorio</strong></span>
     </div>
     <br>
-      <button [disabled]="loginForm.invalid" class="btn btn-danger" type="submit">Send</button> 
-    </form>
-  </div>
+    <button [disabled]="loginForm.invalid" class="btn btn-danger" type="submit">Send</button>
+  </form>
+</div>
