@@ -40,8 +40,8 @@ export class HomeComponent implements OnInit {
     this.totalIntelligence = 0
     this.totalPower = 0
     this.totalSpeed = 0
-    this.totalStrength = 0    
-  
+    this.totalStrength = 0
+
   }
 
   ngAfterViewInit() {
@@ -65,20 +65,37 @@ export class HomeComponent implements OnInit {
     this.servicio.sharedmyTeam.subscribe(myTeam => {
       this.team = myTeam
       for (let i = 0; i < this.team.length; i++) {
-        this.averageWeight += parseInt(myTeam[i].appearance.weight[1].replace("kg", ""))
-        this.averageHeight += parseInt(myTeam[i].appearance.height[1].replace("cm", ""))  
-        this.totalCombat += parseInt(myTeam[i].powerstats.combat)
-        this.totalDurability += parseInt(myTeam[i].powerstats.durability)
-        this.totalIntelligence += parseInt(myTeam[i].powerstats.intelligence)
-        this.totalPower += parseInt(myTeam[i].powerstats.power)
-        this.totalSpeed += parseInt(myTeam[i].powerstats.speed)
-        this.totalStrength += parseInt(myTeam[i].powerstats.strength)
+        if (this.team[i].powerstats.combat != "null") {
+          this.averageWeight += parseInt(myTeam[i].appearance.weight[1].replace("kg", ""))
+          this.averageHeight += parseInt(myTeam[i].appearance.height[1].replace("cm", ""))
+          this.totalCombat += parseInt(myTeam[i].powerstats.combat)
+          this.totalDurability += parseInt(myTeam[i].powerstats.durability)
+          this.totalIntelligence += parseInt(myTeam[i].powerstats.intelligence)
+          this.totalPower += parseInt(myTeam[i].powerstats.power)
+          this.totalSpeed += parseInt(myTeam[i].powerstats.speed)
+          this.totalStrength += parseInt(myTeam[i].powerstats.strength)
+        }
 
       }
-      if(myTeam.length > 0) {
-        this.averageWeight = (this.averageWeight / myTeam.length).toFixed(2)      
+      if (myTeam.length > 0) {
+        this.averageWeight = (this.averageWeight / myTeam.length).toFixed(2)
         this.averageHeight = (this.averageHeight / myTeam.length).toFixed(2)
-      }  
+      }
+
+      this.arrayPowerstats = [["Team Combat: ", this.totalCombat], ["Team Durability: ", this.totalDurability],
+      ["Team Intelligence : ", this.totalIntelligence], ["Team Power: ", this.totalPower],
+      ["Team Speed: ", this.totalSpeed], ["Team Strength: ", this.totalStrength]]
+
+      this.arrayPowerstats.sort(sortFunction)
+
+      function sortFunction(a: any, b: any) {
+        if (a[1] === b[1]) {
+          return 0;
+        }
+        else {
+          return (a[1] > b[1]) ? -1 : 1;
+        }
+      }
 
     })
 
@@ -192,7 +209,7 @@ export class HomeComponent implements OnInit {
   }
 
   calcularPromedios() {
-    
+
     let peso = 0
     let altura = 0
     let combat = 0
@@ -200,21 +217,32 @@ export class HomeComponent implements OnInit {
     let intelligence = 0
     let power = 0
     let speed = 0
-    let strength = 0    
+    let strength = 0
 
     for (let i = 0; i < this.team.length; i++) {
-      peso += parseInt(this.team[i].appearance.weight[1].replace("kg", ""))
-      altura += parseInt(this.team[i].appearance.height[1].replace("cm", ""))
-      combat += parseInt(this.team[i].powerstats.combat)
-      durability += parseInt(this.team[i].powerstats.durability)
-      intelligence += parseInt(this.team[i].powerstats.intelligence)
-      power += parseInt(this.team[i].powerstats.power)
-      speed += parseInt(this.team[i].powerstats.speed)
-      strength += parseInt(this.team[i].powerstats.strength)
+      if (this.team[i].powerstats.combat != "null") {
+        peso += parseInt(this.team[i].appearance.weight[1].replace("kg", ""))
+        altura += parseInt(this.team[i].appearance.height[1].replace("cm", ""))
+        combat += parseInt(this.team[i].powerstats.combat)
+        durability += parseInt(this.team[i].powerstats.durability)
+        intelligence += parseInt(this.team[i].powerstats.intelligence)
+        power += parseInt(this.team[i].powerstats.power)
+        speed += parseInt(this.team[i].powerstats.speed)
+        strength += parseInt(this.team[i].powerstats.strength)
+
+      }
 
     }
-    this.averageWeight = (peso / this.team.length).toFixed(2)
-    this.averageHeight = (altura / this.team.length).toFixed(2)
+    if (this.team.length > 0) {
+      this.averageWeight = (peso / this.team.length).toFixed(2)
+      this.averageHeight = (altura / this.team.length).toFixed(2)
+    } else {
+
+      this.averageWeight = peso
+      this.averageHeight = altura
+
+    }
+
     this.totalCombat = combat
     this.totalDurability = durability
     this.totalIntelligence = intelligence
@@ -222,10 +250,21 @@ export class HomeComponent implements OnInit {
     this.totalSpeed = speed
     this.totalStrength = strength
 
-    this.arrayPowerstats = [this.totalCombat, this.totalDurability, this.totalIntelligence, this.totalPower, this.totalSpeed, this.totalStrength]
-    console.log("sin sort: ",this.arrayPowerstats)
-    this.arrayPowerstats.sort((a:number,b:number)=>b-a)
-    console.log("con sort: ",this.arrayPowerstats)
+    this.arrayPowerstats = [["Team Combat: ", this.totalCombat], ["Team Durability: ", this.totalDurability],
+    ["Team Intelligence : ", this.totalIntelligence], ["Team Power: ", this.totalPower],
+    ["Team Speed: ", this.totalSpeed], ["Team Strength: ", this.totalStrength]]
+
+    this.arrayPowerstats.sort(sortFunction)
+
+    function sortFunction(a: any, b: any) {
+      if (a[1] === b[1]) {
+        return 0;
+      }
+      else {
+        return (a[1] > b[1]) ? -1 : 1;
+      }
+    }
+
 
   }
 

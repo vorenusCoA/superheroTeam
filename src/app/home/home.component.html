@@ -15,12 +15,14 @@
 <h1>Superhero Team</h1>
 <p>Average Team Weight {{averageWeight}} kg</p>
 <p>Average Team Height {{averageHeight}} cm</p>
-<p> Team Combat {{totalCombat}}</p>
-<p> Team Durability {{totalDurability}}</p>
-<p> Team Intelligence {{totalIntelligence}}</p>
-<p> Team Power {{totalPower}}</p>
-<p> Team Speed {{totalSpeed}}</p>
-<p> Team Strength {{totalStrength}}</p>
+<div *ngFor="let powerstat of arrayPowerstats">
+    <ul>
+        <li>{{powerstat[0].replace(",","")}} {{powerstat[1]}}</li>
+    </ul>
+
+</div>
+
+
 <div class="home">
     <div *ngFor="let superheroe of team">
         <img style="width: 200px;" [src]="superheroe.image.url">
