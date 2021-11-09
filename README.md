@@ -1,8 +1,16 @@
-# SuperHero Team (proyecto en progreso)
+# SuperHero Team
 
 Es una aplicacion creada en base al "CHALLENGE FRONTEND - Angular" de Alkemy.
 
-Con un llamado a la API de https://superheroapi.com/, la aplicación permite realizar busquedas de los superheroes favoritos e ir formando un Superhero Team
+Con un llamado a la API de https://superheroapi.com/, la aplicación permite realizar busquedas de los superheroes favoritos e ir formando un Superhero Team.
+
+Se muestran diferentes atributos a nivel individual de cada miembro y del equipo consolidado.
+
+Ingresando los siguientes datos en el formulario de login (Email: challenge@alkemy.org / Password: angular), se logra el acceso a la aplicación.
+
+Al ingresar los datos válidos, se le otorga un token al usuario, que se almacena en localStorage.
+
+Tecnologías utilizadas: Angular (HTML, CSS, JavaScript, TypeScript) y librerías Bootstrap, Toastr.
 
 Pueden verla funcionando en el siguiente link: PENDIENTE
 
