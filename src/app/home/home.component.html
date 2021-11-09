@@ -13,16 +13,13 @@
     </div>
 </div>
 <h1>Superhero Team</h1>
-<div id="averages">
-    <p>Average Team Weight {{averageWeight}} kg</p>
-    <p>Average Team Height {{averageHeight}} cm</p>
-    <div *ngFor="let powerstat of arrayPowerstats">
-        <ul>
-            <li>{{powerstat[0].replace(",","")}} {{powerstat[1]}}</li>
-        </ul>
-    </div>
+<p>Average Team Weight {{averageWeight}} kg</p>
+<p>Average Team Height {{averageHeight}} cm</p>
+<div *ngFor="let powerstat of arrayPowerstats">
+    <ul>
+        <li>{{powerstat[0].replace(",","")}} {{powerstat[1]}}</li>
+    </ul>
 </div>
-
 <div class="home">
     <div *ngFor="let superheroe of team">
         <img style="width: 200px;" [src]="superheroe.image.url">
