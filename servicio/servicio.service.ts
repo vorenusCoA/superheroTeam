@@ -8,7 +8,7 @@ import { SuperHeroe } from 'modelo/superheroe';
 })
 export class ServicioService {
 
-  private API_KEY = "5043192952363608" 
+  private API_KEY = "Introducir API key proporcionada por https://superheroapi.com/"
 
   constructor(private http: HttpClient) { }
 
