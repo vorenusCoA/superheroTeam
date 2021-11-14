@@ -139,6 +139,15 @@ export class HomeComponent implements OnInit {
       msj = "Personaje neutral agregado"
     }
 
+    if(superheroe.powerstats.combat === "null") {
+      superheroe.powerstats.combat = 0
+      superheroe.powerstats.durability = 0
+      superheroe.powerstats.intelligence = 0
+      superheroe.powerstats.power = 0
+      superheroe.powerstats.speed = 0
+      superheroe.powerstats.strength = 0
+    }
+
     this.team.push(superheroe)
     this.toastr.toastrConfig.preventDuplicates = true;
     this.toastr.success(msj, 'Exito!', { timeOut: 2000 })
