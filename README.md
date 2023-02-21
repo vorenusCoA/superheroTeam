@@ -12,7 +12,7 @@ Al ingresar los datos válidos, se le otorga un token al usuario, que se almacen
 
 Tecnologías utilizadas: Angular (HTML, CSS, JavaScript, TypeScript) y librerías Bootstrap, Toastr.
 
-Pueden verla funcionando en el siguiente link: https://superheroteam.herokuapp.com/
+Pueden verla funcionando en el siguiente link: PENDIENTE
 
 ## Instrucciones para correrlo localmente
 
