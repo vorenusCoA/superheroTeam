@@ -1,7 +1,7 @@
 {
-    "/api/*": {
-      "target": "https://superheroapi.com",
-      "secure": false,
-      "changeOrigin": true 
-    }
+  "/api/*": {
+    "target": "https://superheroapi.com",
+    "secure": false,
+    "changeOrigin": true
   }
+}
