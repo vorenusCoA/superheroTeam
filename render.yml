@@ -1,0 +1,21 @@
+# Render YAML file for an Angular app
+
+# Specify the Dockerfile to use for building the app
+dockerfile: Dockerfile
+
+# Configure the environment variables for the app
+env:
+  NODE_ENV: production
+  PORT: 8080
+
+# Define the build command for the app
+build:
+  # Install dependencies
+  - npm install
+  # Build the production version of the app
+  - npm run build
+
+# Define the start command for the app
+start:
+  # Start the app using the production version of the code
+  - npm run start:prod
